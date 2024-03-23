@@ -21,8 +21,6 @@ export default function Login({
       password,
     });
 
-    console.log((await supabase.auth.getSession()).data)
-
     if (error) {
       return redirect("/login?message=Could not authenticate user");
     }
