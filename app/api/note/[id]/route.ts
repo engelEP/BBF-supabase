@@ -1,4 +1,4 @@
-import { Note } from '@/app/interfaces/notes';
+import { INote } from '@/app/interfaces/notes';
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -21,13 +21,13 @@ export const GET = async (_req: NextRequest, context: any) => {
     return NextResponse.json({ status: 500, error: error?.message });
   }
   
-  return NextResponse.json({ status: 200, data: note });
+  return NextResponse.json(note);
 }
 
 export const PATCH = async (req: NextRequest, context: any) => {
   const supabase = createClient();
   const { id } = context.params;
-  const note: Note = await req.json();
+  const note: INote = await req.json();
 
   const existNote: boolean = await getNote(id);
 
