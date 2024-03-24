@@ -1,4 +1,4 @@
-import { Note } from '@/app/interfaces/notes';
+import { INote } from '@/app/interfaces/notes';
 import { createClient } from '@/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -7,22 +7,26 @@ export const GET = async () => {
 
   const { data: notes, error } = await supabase
   .from('notes')
-  .select('*');
+  .select('*')
+  .order('id', { ascending: true });
 
   if(error) {
-    return NextResponse.json({ status: 500, error: error?.message });
+    return NextResponse.error();
   }
 
-  return NextResponse.json({ status: 200, data: notes });
+  return NextResponse.json(notes);
 }
 
 export const POST = async (req: NextRequest) => {
   const supabase = createClient();
   const user_id = req.headers.get('user_id');
-  const note: Note = await req.json();
+  const note: INote = await req.json();
 
   if(!user_id)
     return NextResponse.json({ status: 500, message: 'invalid user...' });
+
+  if(!note.title && !note.content)
+    return NextResponse.json({ status: 500, message: 'invalid note...' });
 
   const { data, error } = await supabase
   .from('notes')
@@ -37,5 +41,5 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ status: 500, error: error?.message });
   }
 
-  return NextResponse.json({ status: 200, data });
+  return NextResponse.json(data);
 }
