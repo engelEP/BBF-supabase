@@ -4,10 +4,12 @@ import Button from "../Button";
 import { useEffect, useState } from "react";
 import { IForm } from "./FormType";
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 
 export default function Form ({ id = '', onSubmit }: IForm) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const router = useRouter()
 
   const handlerChangeTitle = (e: any) => {
     const { value } = e.target;
@@ -20,7 +22,9 @@ export default function Form ({ id = '', onSubmit }: IForm) {
   }
 
   const handlerSubmit = (e: any) => {
+    e.preventDefault();
     onSubmit(title, content);
+    router.push('/protected');
   }
 
   const getNote = async () => {

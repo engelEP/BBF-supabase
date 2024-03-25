@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ITable } from "./TableType";
 import Button from "@/components/Button";
 
-export default function Table ({ data, onDelete, onEdit }: ITable) {
+export default function Table ({ data, onDelete }: ITable) {
 
   const renderData = () => {
     return data?.map((tr) => (
@@ -38,8 +38,8 @@ export default function Table ({ data, onDelete, onEdit }: ITable) {
     <div className="flex flex-col">
       <div className="overflow-x-auto max-h-96 overflow-y-scroll sm:mx-0.5 lg:mx-0.5">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="overflow-hidden">
-              <table className="min-w-full relative">
+          <div className="overflow-hidden relative">
+              <table className="min-w-full">
                 <thead className="bg-white border-b sticky top-0">
                   <tr>
                     <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">

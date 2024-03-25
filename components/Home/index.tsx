@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Table from "@/components/Table";
 import axios from "axios";
-import Button from "../Button";
 import Link from "next/link";
 
 export default function Home () {
@@ -19,11 +18,7 @@ export default function Home () {
     await axios.delete(`${process.env.NEXT_PUBLIC_URL_BASE}/note/${id}`);
     fetchNote();
   }
-
-  const handlerEdit = async (id: number) => {
-    fetchNote();
-  }
-
+  
   useEffect(() => {
     fetchNote();
   }, [])
@@ -41,7 +36,6 @@ export default function Home () {
       <Table
         data={notes}
         onDelete={handlerDelete}
-        onEdit={handlerEdit}
       />
     </div>
   );
